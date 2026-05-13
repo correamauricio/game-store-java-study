@@ -1,3 +1,5 @@
+package main.java.com.mauricio.gamestore.model.entity;
+
 public class Game {
     private String title;
     private String gender;

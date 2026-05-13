@@ -1,3 +1,5 @@
+package main.java.com.mauricio.gamestore.model.entity;
+
 import java.time.LocalDate;
 
 public class Purchase {

@@ -1,3 +1,5 @@
+package main.java.com.mauricio.gamestore.model.entity;
+
 public class GameCategory {
     private String name;
 
