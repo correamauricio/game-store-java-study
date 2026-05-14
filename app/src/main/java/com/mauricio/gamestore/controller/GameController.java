@@ -1,13 +1,13 @@
 package com.mauricio.gamestore.controller;
 
-import com.mauricio.gamestore.model.dao.GameCategoryDAO;
-import com.mauricio.gamestore.model.dao.GameDAO;
 import com.mauricio.gamestore.model.entity.Game;
 import com.mauricio.gamestore.model.entity.GameCategory;
+import com.mauricio.gamestore.model.service.GameCategoryService;
+import com.mauricio.gamestore.model.service.GameService;
 
 public class GameController {
-    private GameDAO gameDAO;
-    private GameCategoryDAO gameCategoryDAO;
+    private GameService gameService;
+    private GameCategoryService gameCategoryService;
 
     public String addGame(String title, String gender, int idCategory, double price ) {
         if (title == null || title.trim().isEmpty()) {
@@ -18,14 +18,14 @@ public class GameController {
             return "Erro: O gênero não pode ser vazio.";
         }
 
-        GameCategory category = gameCategoryDAO.findById(idCategory);
+        GameCategory category = gameCategoryService.findById(idCategory);
 
         if (category == null) {
             return "Erro: Categoria não encontrada no sistema.";
         }
 
         Game game = new Game(title, gender, category, price);
-        boolean success = gameDAO.addGame(game);
+        boolean success = gameService.addGame(game);
 
         if (success) {
             return "Sucesso: Jogo cadastrado no sistema!";
