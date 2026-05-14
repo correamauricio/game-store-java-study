@@ -24,6 +24,10 @@ public class GameController {
             return "Erro: Categoria não encontrada no sistema.";
         }
 
+        if (price < 0) {
+            return "Erro: O preço não pode ser negativo.";
+        }
+
         Game game = new Game(title, gender, category, price);
         boolean success = gameService.addGame(game);
 
