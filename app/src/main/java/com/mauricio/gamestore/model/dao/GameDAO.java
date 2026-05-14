@@ -8,12 +8,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class GameDAO {
+    private final Connection conn;
+
+    public GameDAO(Connection conn) {
+        this.conn = conn;
+    }
     public boolean addGame(Game game) {
         String sql = "INSER INTO jogo (titulo, genero, preco, categoria_id) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement stmt = this.conn.prepareStatement(sql)) {
             stmt.setString(1, game.getTitle());
             stmt.setString(2, game.getGender());
             stmt.setDouble(3, game.getPrice());
