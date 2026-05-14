@@ -6,6 +6,7 @@ import com.mauricio.gamestore.util.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class GameCategoryService {
     public GameCategory findById(int id) {
@@ -14,6 +15,15 @@ public class GameCategoryService {
             return dao.findById(id);
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao buscar categoria", e);
+        }
+    }
+
+    public List<GameCategory> findAll() {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            GameCategoryDAO dao = new GameCategoryDAO(conn);
+            return dao.findAll();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar todas as categorias", e);
         }
     }
 }
