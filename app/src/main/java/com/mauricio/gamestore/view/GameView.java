@@ -45,15 +45,53 @@ public class GameView {
         if (games.isEmpty()) {
             System.out.println("Nenhum jogo cadastrado.");
         } else {
-            System.out.printf("%-20s | %-15s | %-10s | %-15s\n", "Título", "Gênero", "Preço", "Categoria");
-            System.out.println("-------------------------------------------------------------------------");
+            System.out.printf("%-5s | %-20s | %-15s | %-10s | %-15s\n", "ID", "Título", "Gênero", "Preço", "Categoria");
+            System.out.println("-----------------------------------------------------------------------------------");
             for (Game game : games) {
-                System.out.printf("%-20s | %-15s | R$ %-7.2f | %-15s\n",
+                System.out.printf("%-5d | %-20s | %-15s | R$ %-7.2f | %-15s\n",
+                        game.getId(),
                         game.getTitle(),
                         game.getGender(),
                         game.getPrice(),
                         game.getCategory().getTitle());
             }
         }
+    }
+
+    public void editGame() {
+        System.out.println("\n-- EDIÇÃO DE JOGO --");
+        displayAllGames();
+
+        System.out.print("\nDigite o ID do jogo que deseja editar: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        Game game = gameController.getGameById(id);
+        if (game == null) {
+            System.out.println("Erro: Jogo não encontrado.");
+            return;
+        }
+
+        System.out.println("Deixe em branco para manter o valor atual.");
+
+        System.out.print("Título [" + game.getTitle() + "]: ");
+        String title = scanner.nextLine();
+        if (title.trim().isEmpty()) title = game.getTitle();
+
+        System.out.print("Gênero [" + game.getGender() + "]: ");
+        String gender = scanner.nextLine();
+        if (gender.trim().isEmpty()) gender = game.getGender();
+
+        System.out.print("Preço [" + game.getPrice() + "]: ");
+        String priceStr = scanner.nextLine();
+        double price = priceStr.trim().isEmpty() ? game.getPrice() : Double.parseDouble(priceStr);
+
+        GameCategoryView categoryView = new GameCategoryView();
+        categoryView.displayAllCategories();
+        System.out.print("Escolha o ID da categoria [" + game.getCategory().getId() + "]: ");
+        String categoryIdStr = scanner.nextLine();
+        int categoryId = categoryIdStr.trim().isEmpty() ? game.getCategory().getId() : Integer.parseInt(categoryIdStr);
+
+        String message = gameController.updateGame(id, title, gender, categoryId, price);
+        System.out.println(message);
     }
 }

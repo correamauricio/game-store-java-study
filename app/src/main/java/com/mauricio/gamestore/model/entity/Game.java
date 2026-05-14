@@ -1,16 +1,33 @@
 package com.mauricio.gamestore.model.entity;
 
 public class Game {
+    private int id;
     private String title;
     private String gender;
     private GameCategory category;
     private double price;
+
+    public Game(int id, String title, String gender, GameCategory category, double price) {
+        this.id = id;
+        this.title = title;
+        this.gender = gender;
+        this.category = category;
+        this.price = price;
+    }
 
     public Game(String title, String gender, GameCategory category, double price) {
         this.title = title;
         this.gender = gender;
         this.category = category;
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

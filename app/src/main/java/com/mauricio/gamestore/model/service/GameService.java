@@ -30,4 +30,24 @@ public class GameService {
         }
         return new ArrayList<>();
     }
+
+    public Game getGameById(int id) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            GameDAO dao = new GameDAO(conn);
+            return dao.findById(id);
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar jogo: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public boolean updateGame(Game game) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            GameDAO dao = new GameDAO(conn);
+            return dao.updateGame(game);
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar jogo: " + e.getMessage());
+        }
+        return false;
+    }
 }
