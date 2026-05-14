@@ -5,6 +5,8 @@ import com.mauricio.gamestore.model.entity.GameCategory;
 import com.mauricio.gamestore.model.service.GameCategoryService;
 import com.mauricio.gamestore.model.service.GameService;
 
+import java.util.List;
+
 public class GameController {
     private final GameService gameService;
     private final GameCategoryService gameCategoryService;
@@ -41,5 +43,9 @@ public class GameController {
         } else {
             return "Erro: Falha ao tentar salvar no banco de dados.";
         }
+    }
+
+    public List<Game> getAllGames() {
+        return gameService.getAllGames();
     }
 }

@@ -6,6 +6,8 @@ import com.mauricio.gamestore.util.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameService {
     public boolean addGame(Game game) {
@@ -17,5 +19,15 @@ public class GameService {
             System.err.println("Erro ao adicionar game " + e.getMessage());
         }
         return false;
+    }
+
+    public List<Game> getAllGames() {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            GameDAO dao = new GameDAO(conn);
+            return dao.getAllGames();
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar jogos: " + e.getMessage());
+        }
+        return new ArrayList<>();
     }
 }
