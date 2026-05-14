@@ -6,8 +6,13 @@ import com.mauricio.gamestore.model.service.GameCategoryService;
 import com.mauricio.gamestore.model.service.GameService;
 
 public class GameController {
-    private GameService gameService;
-    private GameCategoryService gameCategoryService;
+    private final GameService gameService;
+    private final GameCategoryService gameCategoryService;
+
+    public GameController(GameService gameService, GameCategoryService gameCategoryService) {
+        this.gameService = gameService;
+        this.gameCategoryService = gameCategoryService;
+    }
 
     public String addGame(String title, String gender, int idCategory, double price ) {
         if (title == null || title.trim().isEmpty()) {
