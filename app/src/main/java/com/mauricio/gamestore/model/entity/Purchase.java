@@ -3,16 +3,26 @@ package com.mauricio.gamestore.model.entity;
 import java.time.LocalDate;
 
 public class Purchase {
+    private int id;
     private Customer purchaseCustomer;
     private Game purchaseGame;
     private LocalDate  purchaseDate;
     private int quantity;
 
-    public Purchase(Customer purchaseCustomer, Game purchaseGame, LocalDate purchaseDate, int quantity) {
+    public Purchase(int id, Customer purchaseCustomer, Game purchaseGame, LocalDate purchaseDate, int quantity) {
+        this.id = id;
         this.purchaseCustomer = purchaseCustomer;
         this.purchaseGame = purchaseGame;
         this.purchaseDate = purchaseDate;
         this.quantity = quantity;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Customer getPurchaseCustomer() {

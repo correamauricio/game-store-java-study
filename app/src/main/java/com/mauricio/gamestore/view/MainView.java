@@ -15,6 +15,7 @@ public class MainView {
             System.out.println("5. Listar todos os Clientes");
             System.out.println("6. Buscar Cliente por ID");
             System.out.println("7. Editar Cliente");
+            System.out.println("8. Listar todas as Compras");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -48,6 +49,10 @@ public class MainView {
                 case "7":
                     CustomerView editCustomerView = new CustomerView();
                     editCustomerView.editCustomer();
+                    break;
+                case "8":
+                    PurchaseView purchaseView = new PurchaseView();
+                    purchaseView.displayAllPurchases();
                     break;
                 case "0":
                     System.exit(0);
