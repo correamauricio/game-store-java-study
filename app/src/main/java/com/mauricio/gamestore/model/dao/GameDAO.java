@@ -1,7 +1,6 @@
 package com.mauricio.gamestore.model.dao;
 
 import com.mauricio.gamestore.model.entity.Game;
-import com.mauricio.gamestore.util.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +13,7 @@ public class GameDAO {
         this.conn = conn;
     }
     public boolean addGame(Game game) {
-        String sql = "INSER INTO jogo (titulo, genero, preco, categoria_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO jogo (titulo, genero, preco, categoria_id) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement stmt = this.conn.prepareStatement(sql)) {
             stmt.setString(1, game.getTitle());
