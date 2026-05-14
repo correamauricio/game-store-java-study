@@ -29,4 +29,13 @@ public class PurchaseService {
         }
         return null;
     }
+
+    public void updatePurchase(Purchase purchase) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            PurchaseDAO dao = new PurchaseDAO(conn);
+            dao.updatePurchase(purchase);
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar compra: " + e.getMessage());
+        }
+    }
 }

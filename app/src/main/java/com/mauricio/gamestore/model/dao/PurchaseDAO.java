@@ -118,4 +118,19 @@ public class PurchaseDAO {
         }
         return null;
     }
+    public void updatePurchase(Purchase purchase) {
+        String sql = "UPDATE compra SET cliente_id = ?, jogo_id = ?, data_compra = ?, quantidade = ? WHERE id = ?";
+
+        try (PreparedStatement stmt = this.conn.prepareStatement(sql)) {
+            stmt.setInt(1, purchase.getPurchaseCustomer().getId());
+            stmt.setInt(2, purchase.getPurchaseGame().getId());
+            stmt.setDate(3, java.sql.Date.valueOf(purchase.getPurchaseDate()));
+            stmt.setInt(4, purchase.getQuantity());
+            stmt.setInt(5, purchase.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar compra: " + e.getMessage());
+        }
+    }
 }

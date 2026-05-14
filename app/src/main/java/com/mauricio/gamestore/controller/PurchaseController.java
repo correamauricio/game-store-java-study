@@ -19,4 +19,8 @@ public class PurchaseController {
     public Purchase getPurchaseById(int id) {
         return purchaseService.getPurchaseById(id);
     }
+
+    public void updatePurchase(Purchase purchase) {
+        purchaseService.updatePurchase(purchase);
+    }
 }
