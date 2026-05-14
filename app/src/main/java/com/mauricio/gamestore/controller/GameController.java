@@ -1,11 +1,14 @@
 package com.mauricio.gamestore.controller;
 
+import com.mauricio.gamestore.model.dto.request.GameRequestDTO;
+import com.mauricio.gamestore.model.dto.response.GameResponseDTO;
 import com.mauricio.gamestore.model.entity.Game;
 import com.mauricio.gamestore.model.entity.GameCategory;
 import com.mauricio.gamestore.model.service.GameCategoryService;
 import com.mauricio.gamestore.model.service.GameService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameController {
     private final GameService gameService;
@@ -16,26 +19,26 @@ public class GameController {
         this.gameCategoryService = new GameCategoryService();
     }
 
-    public String addGame(String title, String gender, int idCategory, double price ) {
-        if (title == null || title.trim().isEmpty()) {
+    public String addGame(GameRequestDTO request) {
+        if (request.getTitle() == null || request.getTitle().trim().isEmpty()) {
             return "Erro: O título não pode ser vazio.";
         }
 
-        if (gender == null || gender.trim().isEmpty()) {
+        if (request.getGender() == null || request.getGender().trim().isEmpty()) {
             return "Erro: O gênero não pode ser vazio.";
         }
 
-        GameCategory category = gameCategoryService.findById(idCategory);
+        GameCategory category = gameCategoryService.findById(request.getCategoryId());
 
         if (category == null) {
             return "Erro: Categoria não encontrada no sistema.";
         }
 
-        if (price < 0) {
+        if (request.getPrice() < 0) {
             return "Erro: O preço não pode ser negativo.";
         }
 
-        Game game = new Game(title, gender, category, price);
+        Game game = new Game(request.getTitle(), request.getGender(), category, request.getPrice());
         boolean success = gameService.addGame(game);
 
         if (success) {
@@ -45,34 +48,37 @@ public class GameController {
         }
     }
 
-    public List<Game> getAllGames() {
-        return gameService.getAllGames();
+    public List<GameResponseDTO> getAllGames() {
+        return gameService.getAllGames().stream()
+                .map(this::convertToResponseDTO)
+                .collect(Collectors.toList());
     }
 
-    public Game getGameById(int id) {
-        return gameService.getGameById(id);
+    public GameResponseDTO getGameById(int id) {
+        Game game = gameService.getGameById(id);
+        return (game != null) ? convertToResponseDTO(game) : null;
     }
 
-    public String updateGame(int id, String title, String gender, int idCategory, double price) {
-        if (title == null || title.trim().isEmpty()) {
+    public String updateGame(int id, GameRequestDTO request) {
+        if (request.getTitle() == null || request.getTitle().trim().isEmpty()) {
             return "Erro: O título não pode ser vazio.";
         }
 
-        if (gender == null || gender.trim().isEmpty()) {
+        if (request.getGender() == null || request.getGender().trim().isEmpty()) {
             return "Erro: O gênero não pode ser vazio.";
         }
 
-        GameCategory category = gameCategoryService.findById(idCategory);
+        GameCategory category = gameCategoryService.findById(request.getCategoryId());
 
         if (category == null) {
             return "Erro: Categoria não encontrada no sistema.";
         }
 
-        if (price < 0) {
+        if (request.getPrice() < 0) {
             return "Erro: O preço não pode ser negativo.";
         }
 
-        Game game = new Game(id, title, gender, category, price);
+        Game game = new Game(id, request.getTitle(), request.getGender(), category, request.getPrice());
         boolean success = gameService.updateGame(game);
 
         if (success) {
@@ -80,5 +86,16 @@ public class GameController {
         } else {
             return "Erro: Falha ao tentar atualizar no banco de dados.";
         }
+    }
+
+    private GameResponseDTO convertToResponseDTO(Game game) {
+        return new GameResponseDTO(
+                game.getId(),
+                game.getTitle(),
+                game.getGender(),
+                game.getCategory().getId(),
+                game.getCategory().getTitle(),
+                game.getPrice()
+        );
     }
 }

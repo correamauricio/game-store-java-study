@@ -1,7 +1,8 @@
 package com.mauricio.gamestore.view;
 
 import com.mauricio.gamestore.controller.GameController;
-import com.mauricio.gamestore.model.entity.Game;
+import com.mauricio.gamestore.model.dto.request.GameRequestDTO;
+import com.mauricio.gamestore.model.dto.response.GameResponseDTO;
 
 import java.util.List;
 import java.util.Scanner;
@@ -33,12 +34,13 @@ public class GameView {
         System.out.print("\nEscolha o ID da categoria: ");
         int categoryId = Integer.parseInt(scanner.nextLine());
 
-        String message = gameController.addGame(title, gender, categoryId, price);
+        GameRequestDTO request = new GameRequestDTO(title, gender, categoryId, price);
+        String message = gameController.addGame(request);
         System.out.println(message);
     }
 
     public void displayAllGames() {
-        List<Game> games = gameController.getAllGames();
+        List<GameResponseDTO> games = gameController.getAllGames();
 
         System.out.println("\n-- LISTA DE TODOS OS JOGOS --");
 
@@ -47,13 +49,13 @@ public class GameView {
         } else {
             System.out.printf("%-5s | %-20s | %-15s | %-10s | %-15s\n", "ID", "Título", "Gênero", "Preço", "Categoria");
             System.out.println("-----------------------------------------------------------------------------------");
-            for (Game game : games) {
+            for (GameResponseDTO game : games) {
                 System.out.printf("%-5d | %-20s | %-15s | R$ %-7.2f | %-15s\n",
                         game.getId(),
                         game.getTitle(),
                         game.getGender(),
                         game.getPrice(),
-                        game.getCategory().getTitle());
+                        game.getCategoryTitle());
             }
         }
     }
@@ -65,7 +67,7 @@ public class GameView {
         System.out.print("\nDigite o ID do jogo que deseja editar: ");
         int id = Integer.parseInt(scanner.nextLine());
 
-        Game game = gameController.getGameById(id);
+        GameResponseDTO game = gameController.getGameById(id);
         if (game == null) {
             System.out.println("Erro: Jogo não encontrado.");
             return;
@@ -87,11 +89,12 @@ public class GameView {
 
         GameCategoryView categoryView = new GameCategoryView();
         categoryView.displayAllCategories();
-        System.out.print("Escolha o ID da categoria [" + game.getCategory().getId() + "]: ");
+        System.out.print("Escolha o ID da categoria [" + game.getCategoryId() + "]: ");
         String categoryIdStr = scanner.nextLine();
-        int categoryId = categoryIdStr.trim().isEmpty() ? game.getCategory().getId() : Integer.parseInt(categoryIdStr);
+        int categoryId = categoryIdStr.trim().isEmpty() ? game.getCategoryId() : Integer.parseInt(categoryIdStr);
 
-        String message = gameController.updateGame(id, title, gender, categoryId, price);
+        GameRequestDTO request = new GameRequestDTO(title, gender, categoryId, price);
+        String message = gameController.updateGame(id, request);
         System.out.println(message);
     }
     
@@ -100,7 +103,7 @@ public class GameView {
         System.out.print("Digite o ID do jogo: ");
         try {
             int id = Integer.parseInt(scanner.nextLine());
-            Game game = gameController.getGameById(id);
+            GameResponseDTO game = gameController.getGameById(id);
 
             if (game != null) {
                 System.out.println("\nJogo encontrado:");
@@ -108,7 +111,7 @@ public class GameView {
                 System.out.println("Título: " + game.getTitle());
                 System.out.println("Gênero: " + game.getGender());
                 System.out.printf("Preço: R$ %.2f\n", game.getPrice());
-                System.out.println("Categoria: " + game.getCategory().getTitle());
+                System.out.println("Categoria: " + game.getCategoryTitle());
             } else {
                 System.out.println("Jogo com ID " + id + " não encontrado.");
             }

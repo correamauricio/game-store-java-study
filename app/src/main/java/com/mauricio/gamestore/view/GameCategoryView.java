@@ -1,7 +1,7 @@
 package com.mauricio.gamestore.view;
 
 import com.mauricio.gamestore.controller.GameCategoryController;
-import com.mauricio.gamestore.model.entity.GameCategory;
+import com.mauricio.gamestore.model.dto.response.GameCategoryResponseDTO;
 
 import java.util.List;
 
@@ -13,10 +13,10 @@ public class GameCategoryView {
     }
 
     public void displayAllCategories () {
-        List<GameCategory> allCategories = gameCategoryController.findAll();
+        List<GameCategoryResponseDTO> allCategories = gameCategoryController.findAll();
 
         System.out.println("\n-- TODAS AS CATEGORIAS --");
-        for (GameCategory category : allCategories) {
+        for (GameCategoryResponseDTO category : allCategories) {
             System.out.printf("%d. %s%n", category.getId(), category.getTitle());
         }
     }
