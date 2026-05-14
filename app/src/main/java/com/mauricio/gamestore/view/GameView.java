@@ -94,4 +94,26 @@ public class GameView {
         String message = gameController.updateGame(id, title, gender, categoryId, price);
         System.out.println(message);
     }
+    
+    public void findGameById() {
+        System.out.println("\n-- BUSCAR JOGO POR ID --");
+        System.out.print("Digite o ID do jogo: ");
+        try {
+            int id = Integer.parseInt(scanner.nextLine());
+            Game game = gameController.getGameById(id);
+
+            if (game != null) {
+                System.out.println("\nJogo encontrado:");
+                System.out.println("ID: " + game.getId());
+                System.out.println("Título: " + game.getTitle());
+                System.out.println("Gênero: " + game.getGender());
+                System.out.printf("Preço: R$ %.2f\n", game.getPrice());
+                System.out.println("Categoria: " + game.getCategory().getTitle());
+            } else {
+                System.out.println("Jogo com ID " + id + " não encontrado.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("ID inválido. Por favor, digite um número.");
+        }
+    }
 }
