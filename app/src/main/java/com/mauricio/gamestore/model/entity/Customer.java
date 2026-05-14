@@ -1,4 +1,4 @@
-package main.java.com.mauricio.gamestore.model.entity;
+package com.mauricio.gamestore.model.entity;
 
 public class Customer {
     private String name;
