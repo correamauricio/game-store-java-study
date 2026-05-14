@@ -8,8 +8,8 @@ import java.util.List;
 public class GameCategoryController {
     private final GameCategoryService categoryService;
 
-    public GameCategoryController(GameCategoryService categoryService) {
-        this.categoryService = categoryService;
+    public GameCategoryController() {
+        this.categoryService = new GameCategoryService();
     }
 
     public List<GameCategory> findAll () {

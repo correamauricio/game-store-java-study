@@ -9,9 +9,9 @@ public class GameController {
     private final GameService gameService;
     private final GameCategoryService gameCategoryService;
 
-    public GameController(GameService gameService, GameCategoryService gameCategoryService) {
-        this.gameService = gameService;
-        this.gameCategoryService = gameCategoryService;
+    public GameController() {
+        this.gameService = new GameService();
+        this.gameCategoryService = new GameCategoryService();
     }
 
     public String addGame(String title, String gender, int idCategory, double price ) {
