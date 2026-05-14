@@ -3,10 +3,10 @@ package com.mauricio.gamestore.model.entity;
 public class Game {
     private String title;
     private String gender;
-    private String category;
+    private GameCategory category;
     private double price;
 
-    public Game(String title, String gender, String category, double price) {
+    public Game(String title, String gender, GameCategory category, double price) {
         this.title = title;
         this.gender = gender;
         this.category = category;
@@ -29,11 +29,11 @@ public class Game {
         this.gender = gender;
     }
 
-    public String getCategory() {
+    public GameCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(GameCategory category) {
         this.category = category;
     }
 
