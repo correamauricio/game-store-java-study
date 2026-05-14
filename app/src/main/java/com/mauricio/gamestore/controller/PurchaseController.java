@@ -15,4 +15,8 @@ public class PurchaseController {
     public List<Purchase> getAllPurchases() {
         return purchaseService.listAllPurchases();
     }
+
+    public Purchase getPurchaseById(int id) {
+        return purchaseService.getPurchaseById(id);
+    }
 }

@@ -19,4 +19,14 @@ public class PurchaseService {
         }
         return new ArrayList<>();
     }
+
+    public Purchase getPurchaseById(int id) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            PurchaseDAO dao = new PurchaseDAO(conn);
+            return dao.getPurchaseById(id);
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar compra por ID: " + e.getMessage());
+        }
+        return null;
+    }
 }

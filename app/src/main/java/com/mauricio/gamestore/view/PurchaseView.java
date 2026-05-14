@@ -4,12 +4,15 @@ import com.mauricio.gamestore.controller.PurchaseController;
 import com.mauricio.gamestore.model.entity.Purchase;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class PurchaseView {
     private final PurchaseController purchaseController;
+    private final Scanner scanner;
 
     public PurchaseView() {
         this.purchaseController = new PurchaseController();
+        this.scanner = new Scanner(System.in);
     }
 
     public void displayAllPurchases() {
@@ -30,6 +33,30 @@ public class PurchaseView {
                         purchase.getPurchaseDate().toString(),
                         purchase.getQuantity());
             }
+        }
+    }
+
+    public void searchPurchaseById() {
+        System.out.print("\nDigite o ID da compra que deseja buscar: ");
+        try {
+            int id = Integer.parseInt(scanner.nextLine());
+            Purchase purchase = purchaseController.getPurchaseById(id);
+
+            if (purchase == null) {
+                System.out.println("Compra com ID " + id + " não encontrada.");
+            } else {
+                System.out.println("\n-- DETALHES DA COMPRA --");
+                System.out.printf("%-5s | %-15s | %-20s | %-10s | %-10s\n", "ID", "Cliente", "Jogo", "Data", "Qtd");
+                System.out.println("-------------------------------------------------------------------------");
+                System.out.printf("%-5d | %-15s | %-20s | %-10s | %-10d\n",
+                        purchase.getId(),
+                        purchase.getPurchaseCustomer().getName(),
+                        purchase.getPurchaseGame().getTitle(),
+                        purchase.getPurchaseDate().toString(),
+                        purchase.getQuantity());
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("ID inválido. Por favor, digite um número.");
         }
     }
 }
