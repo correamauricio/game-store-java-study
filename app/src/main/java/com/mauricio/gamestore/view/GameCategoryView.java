@@ -8,8 +8,8 @@ import java.util.List;
 public class GameCategoryView {
     private final GameCategoryController gameCategoryController;
 
-    public GameCategoryView(GameCategoryController gameCategoryController) {
-        this.gameCategoryController = gameCategoryController;
+    public GameCategoryView() {
+        this.gameCategoryController = new GameCategoryController();
     }
 
     public void displayAllCategories () {
