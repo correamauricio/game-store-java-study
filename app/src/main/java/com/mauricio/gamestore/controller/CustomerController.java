@@ -19,6 +19,10 @@ public class CustomerController {
         return customerService.findById(id);
     }
 
+    public boolean registerCustomer(Customer customer) {
+        return customerService.registerCustomer(customer);
+    }
+
     public boolean updateCustomer(Customer customer) {
         return customerService.updateCustomer(customer);
     }

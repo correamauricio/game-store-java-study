@@ -57,6 +57,21 @@ public class CustomerDAO {
         return null;
     }
 
+    public boolean create(Customer customer) {
+        String sql = "INSERT INTO cliente (nome, email, idade) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = this.conn.prepareStatement(sql)) {
+            stmt.setString(1, customer.getName());
+            stmt.setString(2, customer.getEmail());
+            stmt.setInt(3, customer.getAge());
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            System.err.println("Erro ao cadastrar cliente: " + e.getMessage());
+            return false;
+        }
+    }
+
     public boolean update(Customer customer) {
         String sql = "UPDATE cliente SET nome = ?, email = ?, idade = ? WHERE id = ?";
         try (PreparedStatement stmt = this.conn.prepareStatement(sql)) {

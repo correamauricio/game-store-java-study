@@ -14,6 +14,26 @@ public class CustomerView {
         this.scanner = new Scanner(System.in);
     }
 
+    public void registerCustomer() {
+        System.out.println("\n -- CADASTRAR NOVO CLIENTE --");
+        System.out.print("Nome: ");
+        String name = scanner.nextLine();
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+        System.out.print("Idade: ");
+        try {
+            int age = Integer.parseInt(scanner.nextLine());
+            Customer customer = new Customer(name, email, age);
+            if (customerController.registerCustomer(customer)) {
+                System.out.println("Cliente cadastrado com sucesso!");
+            } else {
+                System.out.println("Erro ao cadastrar cliente.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Idade inválida. Operação cancelada.");
+        }
+    }
+
     public void displayAllCustomers() {
         List<Customer> customers = customerController.getAllCustomers();
         System.out.println("\n -- LISTA DE CLIENTES --");

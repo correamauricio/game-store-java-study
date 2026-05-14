@@ -30,6 +30,16 @@ public class CustomerService {
         return null;
     }
 
+    public boolean registerCustomer(Customer customer) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            CustomerDAO dao = new CustomerDAO(conn);
+            return dao.create(customer);
+        } catch (SQLException e) {
+            System.err.println("Erro ao cadastrar cliente: " + e.getMessage());
+            return false;
+        }
+    }
+
     public boolean updateCustomer(Customer customer) {
         try (Connection conn = DatabaseConnection.getConnection()) {
             CustomerDAO dao = new CustomerDAO(conn);
