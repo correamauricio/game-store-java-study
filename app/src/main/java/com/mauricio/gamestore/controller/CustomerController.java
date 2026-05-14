@@ -18,4 +18,8 @@ public class CustomerController {
     public Customer findById(int id) {
         return customerService.findById(id);
     }
+
+    public boolean updateCustomer(Customer customer) {
+        return customerService.updateCustomer(customer);
+    }
 }

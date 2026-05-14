@@ -52,4 +52,42 @@ public class CustomerView {
             System.out.println("ID inválido. Por favor, digite um número.");
         }
     }
+
+    public void editCustomer() {
+        System.out.println("\n -- EDITAR CLIENTE --");
+        displayAllCustomers();
+        System.out.print("\nDigite o ID do cliente que deseja editar: ");
+        try {
+            int id = Integer.parseInt(scanner.nextLine());
+            Customer customer = customerController.findById(id);
+
+            if (customer != null) {
+                System.out.println("Dados atuais - Nome: " + customer.getName() + ", Email: " + customer.getEmail() + ", Idade: " + customer.getAge());
+                
+                System.out.print("Novo nome (deixe em branco para manter): ");
+                String name = scanner.nextLine();
+                if (!name.isBlank()) customer.setName(name);
+
+                System.out.print("Novo email (deixe em branco para manter): ");
+                String email = scanner.nextLine();
+                if (!email.isBlank()) customer.setEmail(email);
+
+                System.out.print("Nova idade (deixe em branco para manter): ");
+                String ageStr = scanner.nextLine();
+                if (!ageStr.isBlank()) {
+                    customer.setAge(Integer.parseInt(ageStr));
+                }
+
+                if (customerController.updateCustomer(customer)) {
+                    System.out.println("Cliente atualizado com sucesso!");
+                } else {
+                    System.out.println("Erro ao atualizar cliente.");
+                }
+            } else {
+                System.out.println("Cliente com ID " + id + " não encontrado.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Operação cancelada.");
+        }
+    }
 }

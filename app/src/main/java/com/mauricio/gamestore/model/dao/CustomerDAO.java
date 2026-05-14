@@ -56,4 +56,20 @@ public class CustomerDAO {
         }
         return null;
     }
+
+    public boolean update(Customer customer) {
+        String sql = "UPDATE cliente SET nome = ?, email = ?, idade = ? WHERE id = ?";
+        try (PreparedStatement stmt = this.conn.prepareStatement(sql)) {
+            stmt.setString(1, customer.getName());
+            stmt.setString(2, customer.getEmail());
+            stmt.setInt(3, customer.getAge());
+            stmt.setInt(4, customer.getId());
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar cliente: " + e.getMessage());
+            return false;
+        }
+    }
 }

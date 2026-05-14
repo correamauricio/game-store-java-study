@@ -29,4 +29,14 @@ public class CustomerService {
         }
         return null;
     }
+
+    public boolean updateCustomer(Customer customer) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            CustomerDAO dao = new CustomerDAO(conn);
+            return dao.update(customer);
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar cliente: " + e.getMessage());
+            return false;
+        }
+    }
 }
