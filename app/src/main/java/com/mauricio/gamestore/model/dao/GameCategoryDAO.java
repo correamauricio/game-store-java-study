@@ -17,15 +17,14 @@ public class GameCategoryDAO {
         String sql = "SELECT * FROM categoria WHERE id = ?;";
 
         try (PreparedStatement stmt = this.conn.prepareStatement(sql)) {
-
             stmt.setInt(1, id);
-            ResultSet resultSet = stmt.executeQuery();
-
-            if (resultSet.next()) {
-                return new GameCategory(
-                        resultSet.getInt("id"),
-                        resultSet.getString("nome")
-                );
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    return new GameCategory(
+                            resultSet.getInt("id"),
+                            resultSet.getString("nome")
+                    );
+                }
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -37,8 +36,8 @@ public class GameCategoryDAO {
         String sql = "SELECT * FROM categoria;";
         List<GameCategory> gameCategories = new ArrayList<>();
 
-        try (PreparedStatement stmt = this.conn.prepareStatement(sql)) {
-            ResultSet resultSet = stmt.executeQuery();
+        try (PreparedStatement stmt = this.conn.prepareStatement(sql);
+             ResultSet resultSet = stmt.executeQuery()) {
 
             while (resultSet.next()) {
                 gameCategories.add(new GameCategory(
