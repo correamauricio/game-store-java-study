@@ -1,6 +1,7 @@
 package com.mauricio.gamestore.model.entity;
 
 public class Customer {
+    private int id;
     private String name;
     private String email;
     private int age;
@@ -9,6 +10,21 @@ public class Customer {
         this.name = name;
         this.email = email;
         this.age = age;
+    }
+
+    public Customer(int id, String name, String email, int age) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.age = age;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

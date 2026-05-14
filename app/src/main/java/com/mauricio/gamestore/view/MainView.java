@@ -12,6 +12,7 @@ public class MainView {
             System.out.println("2. Cadastrar novo Jogo");
             System.out.println("3. Listar todos os Jogos");
             System.out.println("4. Editar Jogo");
+            System.out.println("5. Listar todos os Clientes");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -33,6 +34,10 @@ public class MainView {
                 case "4":
                     GameView editGameView = new GameView();
                     editGameView.editGame();
+                    break;
+                case "5":
+                    CustomerView customerView = new CustomerView();
+                    customerView.displayAllCustomers();
                     break;
                 case "0":
                     System.exit(0);
