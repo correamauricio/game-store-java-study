@@ -14,4 +14,8 @@ public class CustomerController {
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
+
+    public Customer findById(int id) {
+        return customerService.findById(id);
+    }
 }

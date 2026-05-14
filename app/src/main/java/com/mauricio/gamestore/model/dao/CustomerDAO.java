@@ -36,4 +36,24 @@ public class CustomerDAO {
         }
         return customers;
     }
+
+    public Customer findById(int id) {
+        String sql = "SELECT id, nome, email, idade FROM cliente WHERE id = ?";
+        try (PreparedStatement stmt = this.conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Customer(
+                            rs.getInt("id"),
+                            rs.getString("nome"),
+                            rs.getString("email"),
+                            rs.getInt("idade")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar cliente por ID: " + e.getMessage());
+        }
+        return null;
+    }
 }

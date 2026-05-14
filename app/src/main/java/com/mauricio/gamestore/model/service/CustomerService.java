@@ -19,4 +19,14 @@ public class CustomerService {
         }
         return new ArrayList<>();
     }
+
+    public Customer findById(int id) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            CustomerDAO dao = new CustomerDAO(conn);
+            return dao.findById(id);
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar cliente: " + e.getMessage());
+        }
+        return null;
+    }
 }
