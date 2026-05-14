@@ -8,11 +8,15 @@ import java.util.Scanner;
 
 public class PurchaseView {
     private final PurchaseController purchaseController;
+    private final CustomerView customerView;
+    private final GameView gameView;
     private final Scanner scanner;
 
     public PurchaseView() {
         this.purchaseController = new PurchaseController();
         this.scanner = new Scanner(System.in);
+        this.customerView = new CustomerView();
+        this.gameView = new GameView();
     }
 
     public void displayAllPurchases() {
@@ -89,6 +93,33 @@ public class PurchaseView {
             }
         } catch (NumberFormatException e) {
             System.out.println("Entrada inválida. Operação cancelada.");
+        }
+    }
+
+    public void registerPurchase() {
+        System.out.println("\n-- REGISTRO DE NOVA COMPRA --");
+
+        try {
+            System.out.print("\n-- LISTA DE CLIENTES --");
+            customerView.displayAllCustomers();
+
+            System.out.print("Digite o ID do Cliente: ");
+            int customerId = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("\n-- LISTA DE JOGOS --");
+            gameView.displayAllGames();
+
+            System.out.print("Digite o ID do Jogo: ");
+            int gameId = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Digite a Quantidade: ");
+            int quantity = Integer.parseInt(scanner.nextLine());
+
+            String result = purchaseController.registerPurchase(customerId, gameId, quantity);
+            System.out.println(result);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Certifique-se de digitar números para IDs e Quantidade.");
         }
     }
 }

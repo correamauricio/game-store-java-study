@@ -38,4 +38,13 @@ public class PurchaseService {
             System.err.println("Erro ao atualizar compra: " + e.getMessage());
         }
     }
+
+    public void savePurchase(Purchase purchase) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            PurchaseDAO dao = new PurchaseDAO(conn);
+            dao.savePurchase(purchase);
+        } catch (SQLException e) {
+            System.err.println("Erro ao salvar compra: " + e.getMessage());
+        }
+    }
 }

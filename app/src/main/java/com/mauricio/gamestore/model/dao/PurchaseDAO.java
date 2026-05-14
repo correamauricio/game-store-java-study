@@ -133,4 +133,19 @@ public class PurchaseDAO {
             System.err.println("Erro ao atualizar compra: " + e.getMessage());
         }
     }
+
+    public void savePurchase(Purchase purchase) {
+        String sql = "INSERT INTO compra (cliente_id, jogo_id, data_compra, quantidade) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = this.conn.prepareStatement(sql)) {
+            stmt.setInt(1, purchase.getPurchaseCustomer().getId());
+            stmt.setInt(2, purchase.getPurchaseGame().getId());
+            stmt.setDate(3, java.sql.Date.valueOf(purchase.getPurchaseDate()));
+            stmt.setInt(4, purchase.getQuantity());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erro ao salvar compra: " + e.getMessage());
+        }
+    }
 }
